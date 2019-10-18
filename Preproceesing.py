@@ -4,7 +4,7 @@ import os, json
 path_to_json = '/Users/weiding/Desktop/vc/sum_all'
 # read all json files from the folder
 json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
-#paulNg
+
 # enumerate each file and find number of empty files
 count_empty_file = 0
 for index, js in enumerate(json_files):
