@@ -51,3 +51,9 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+.idea/
