@@ -45,7 +45,7 @@ for index, js in enumerate(json_files):
                     for sub_tab in sub_tabs:
                         if len(sub_tab) != 0:
                             company_tab_list.append([js, sub_tab])
-                    sentenceList = nltk.sent_tokenize(value)
+                    sentenceList = nltk.sent_tokenize(value)  # split paragraph as sentences
                     for sentence in sentenceList:
                         company_tab_content_list.append([js, key, sentence])
 
@@ -61,8 +61,10 @@ with open('tabs.csv', 'w') as writeFile:
 
 writeFile.close()
 
+# generate a dataframe: each row with 3 columns - company, tab and content. Each sentence of content as a single row.
 company_tab_content_df = pd.DataFrame(company_tab_content_list)
 company_tab_content_df.columns = ['company', 'tab', 'content']
-company_tab_content_df.drop_duplicates(subset=['company', 'content'], inplace=True)
-company_tab_unique_content_df = company_tab_content_df.groupby(['company', 'tab'])['content'].apply(lambda x: '.'.join(x)).reset_index()
-company_tab_unique_content_df.to_csv("company_tab_content.csv", sep='\t', encoding='utf-8')
+company_tab_content_df.drop_duplicates(subset=['company', 'content'], inplace=True)  # remove duplicate sentences
+company_tab_unique_content_df = company_tab_content_df.groupby(['company', 'tab'])['content'].\
+    apply(lambda x: '.'.join(x)).reset_index()  # gather sentences together with same company and tab
+company_tab_unique_content_df.to_csv("company_tab_content.csv", sep='\t', encoding='utf-8')  # write to csv
