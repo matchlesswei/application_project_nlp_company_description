@@ -4,7 +4,7 @@ import pandas as pd
 import nltk
 
 # path_to_json = '/Users/weiding/Google Drive/Application Project/100_files'
-path_to_json = '/Users/weiding/Desktop/vc/sum'
+path_to_json = '/Users/weiding/Desktop/vc/sum_all'
 # read all json files from the folder
 json_files = [pos_json for pos_json in os.listdir(path_to_json) if pos_json.endswith('.json')]
 nltk.download('punkt')
@@ -67,4 +67,5 @@ company_tab_content_df.columns = ['company', 'tab', 'content']
 company_tab_content_df.drop_duplicates(subset=['company', 'content'], inplace=True)  # remove duplicate sentences
 company_tab_unique_content_df = company_tab_content_df.groupby(['company', 'tab'])['content'].\
     apply(lambda x: '.'.join(x)).reset_index()  # gather sentences together with same company and tab
-company_tab_unique_content_df.to_csv("company_tab_content.csv", sep='\t', encoding='utf-8')  # write to csv
+print(company_tab_unique_content_df)
+company_tab_unique_content_df.to_csv("company_tab_content_sum_all.csv", encoding='utf-8', index=False)  # write to csv
