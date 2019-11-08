@@ -67,5 +67,11 @@ company_tab_content_df.columns = ['company', 'tab', 'content']
 company_tab_content_df.drop_duplicates(subset=['company', 'content'], inplace=True)  # remove duplicate sentences
 company_tab_unique_content_df = company_tab_content_df.groupby(['company', 'tab'])['content'].\
     apply(lambda x: '.'.join(x)).reset_index()  # gather sentences together with same company and tab
-print(company_tab_unique_content_df)
-company_tab_unique_content_df.to_csv("company_tab_content_sum_all.csv", encoding='utf-8', index=False)  # write to csv
+
+# add industry category to the data
+df_industry = pd.read_stata('/Users/weiding/Desktop/industry.dta')
+company_tab_unique_content_df = company_tab_unique_content_df.rename(columns = {'company':'Web'})
+df_sum_all_with_label = pd.merge(company_tab_unique_content_df, df_industry, on='Web', how='left')
+df_sum_all_with_label = df_sum_all_with_label.dropna(subset=['IndustrySegment'])
+
+df_sum_all_with_label.to_csv("company_tab_content_sum_all_with_label.csv", encoding='utf-8', index=False)
