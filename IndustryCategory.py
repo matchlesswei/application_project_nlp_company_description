@@ -18,3 +18,8 @@ print('number of total companies:' + str(number_of_companies))
 print('number of companies with unique industry category:' + str(number_of_unique_industry_companies))
 print(df_single_industry)
 
+df_large_category = pd.read_excel('/Users/weiding/Desktop/LargeCategory.xlsx', header=None)
+df_large_category.columns = ['index', 'category']
+df_categroy_analysis = pd.merge(df_single_industry, df_large_category, on='index', how='left')
+print("Industry big category and number of companies:")
+print(df_categroy_analysis.groupby(['category']).sum())
