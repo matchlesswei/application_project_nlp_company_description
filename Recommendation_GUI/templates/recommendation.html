@@ -1,0 +1,50 @@
+<!--
+This is html sheet for the company recommendation webpage.
+-->
+<!DOCTYPE html>
+<html >
+<head>
+  <meta charset="UTF-8">
+  <title>Company Recommendation</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body style="background: #000;">
+<div id="loading"></div>
+<div id="content">
+ <div class="login">
+	<h1>Similar Company Recommendation</h1>
+
+    <form action="{{ url_for('recommendation')}}"method="post">
+        <font size="3">Please select the number of companies: </font>
+        <br>
+        <select name="select_number" style="font-size:14px">
+            <option value="5" selected="selected">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
+        <br>
+        <br>
+        <input type="text" name="Input company website" placeholder="Input company website" required="required" />
+
+        <button type="submit" class="btn btn-primary btn-block btn-large" >Recommend Company</button>
+    </form>
+   <br>
+     <br>
+   <b> ----Recommended Company Website List----</b>
+   <br>
+   {% for company, category in combine %}
+      <pre><li>{{"Company: "}}{{company}}{{"   Category: "}}{{category}}</li></pre>
+   {% endfor %}
+   <br>
+
+   </div>
+ </div>
+</body>
+</html>
